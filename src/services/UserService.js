@@ -5,6 +5,7 @@ const { generalAccessToken, generalRefreshToken } = require("./JwtService");
 const createUser = (newUser) => {
   return new Promise(async (resolve, reject) => {
     const { name, email, password, phone, confirmPassword } = newUser;
+
     try {
       const checkUser = await User.findOne({
         email: email,
@@ -12,7 +13,7 @@ const createUser = (newUser) => {
       if (checkUser !== null) {
         resolve({
           status: "ERR",
-          message: "The email is already",
+          message: "Email đã tồn tại!",
         });
       }
       const hash = bcrypt.hashSync(password, 10);
@@ -38,6 +39,7 @@ const createUser = (newUser) => {
 const loginUser = (userLogin) => {
   return new Promise(async (resolve, reject) => {
     const { email, password } = userLogin;
+
     try {
       const checkUser = await User.findOne({
         email: email,
@@ -45,7 +47,7 @@ const loginUser = (userLogin) => {
       if (checkUser === null) {
         resolve({
           status: "ERR",
-          message: "The user is not defined",
+          message: "Tài khoản không tồn tại!",
         });
       }
       const comparePassword = bcrypt.compareSync(password, checkUser.password);
@@ -53,7 +55,7 @@ const loginUser = (userLogin) => {
       if (!comparePassword) {
         resolve({
           status: "ERR",
-          message: "The password or user is incorrect",
+          message: "Mật khẩu hoặc người dùng không chính xác",
         });
       }
 
@@ -88,7 +90,7 @@ const updateUser = (id, data) => {
       if (checkUser === null) {
         resolve({
           status: "ERR",
-          message: "The user is not defined",
+          message: "Tài khoản không tồn tại!",
         });
       }
 
@@ -113,13 +115,13 @@ const deleteUser = (id) => {
       if (checkUser === null) {
         resolve({
           status: "ERR",
-          message: "The user is not defined",
+          message: "Tài khoản không tồn tại!",
         });
       }
       await User.findByIdAndDelete(id);
       resolve({
         status: "OK",
-        message: "Delete user success",
+        message: "Xóa tài khoản thành công",
       });
     } catch (e) {
       reject(e);
@@ -133,7 +135,7 @@ const deleteManyUser = (ids) => {
       await User.deleteMany({ _id: ids });
       resolve({
         status: "OK",
-        message: "Delete user success",
+        message: "Xóa nhiều tài khoản thành công",
       });
     } catch (e) {
       reject(e);
@@ -165,7 +167,7 @@ const getDetailsUser = (id) => {
       if (user === null) {
         resolve({
           status: "ERR",
-          message: "The user is not defined",
+          message: "Tài khoản không tồn tại!",
         });
       }
       resolve({
