@@ -15,12 +15,12 @@ const createUser = async (req, res) => {
     } else if (!isCheckEmail) {
       return res.status(200).json({
         status: "ERR",
-        message: "Vui lòng nhập đúng định dạng email (email@gmail.com)",
+        message: "Please enter the correct email format (email@gmail.com)",
       });
     } else if (password !== confirmPassword) {
       return res.status(200).json({
         status: "ERR",
-        message: "Mật khẩu không khớp. Vui lòng nhập lại",
+        message: "Password incorrect. Please input again",
       });
     }
 
@@ -47,7 +47,7 @@ const loginUser = async (req, res) => {
     } else if (!isCheckEmail) {
       return res.status(200).json({
         status: "ERR",
-        message: "Vui lòng nhập đúng định dạng email (email@gmail.com)",
+        message: "Please enter the correct email format (email@gmail.com)",
       });
     }
 

@@ -206,6 +206,7 @@ const getAllType = () => {
       resolve({
         status: "OK",
         message: "Success",
+        results: allType.length,
         data: allType,
       });
     } catch (e) {

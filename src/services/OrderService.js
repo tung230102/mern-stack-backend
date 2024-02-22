@@ -56,7 +56,7 @@ const createOrder = (newOrder) => {
         });
         resolve({
           status: "ERR",
-          message: `San pham voi id: ${arrId.join(",")} khong du hang`,
+          message: `Product with ID ${arrId.join(",")} is not in stock`,
         });
       } else {
         const createdOrder = await Order.create({
@@ -177,7 +177,7 @@ const cancelOrderDetails = (id, data) => {
       if (newData) {
         resolve({
           status: "ERR",
-          message: `San pham voi id: ${newData} khong ton tai`,
+          message: `No document found with that ID ${newData}`,
         });
       }
       resolve({
@@ -201,6 +201,7 @@ const getAllOrder = () => {
       resolve({
         status: "OK",
         message: "Success",
+        results: allOrder.length,
         data: allOrder,
       });
     } catch (e) {

@@ -13,7 +13,7 @@ const createUser = (newUser) => {
       if (checkUser !== null) {
         resolve({
           status: "ERR",
-          message: "Email đã tồn tại!",
+          message: "Email already exists!",
         });
       }
       const hash = bcrypt.hashSync(password, 10);
@@ -47,7 +47,7 @@ const loginUser = (userLogin) => {
       if (checkUser === null) {
         resolve({
           status: "ERR",
-          message: "Tài khoản không tồn tại!",
+          message: "Account does not exist!",
         });
       }
       const comparePassword = bcrypt.compareSync(password, checkUser.password);
@@ -55,7 +55,7 @@ const loginUser = (userLogin) => {
       if (!comparePassword) {
         resolve({
           status: "ERR",
-          message: "Mật khẩu hoặc người dùng không chính xác",
+          message: "Password or user is incorrect",
         });
       }
 
@@ -90,7 +90,7 @@ const updateUser = (id, data) => {
       if (checkUser === null) {
         resolve({
           status: "ERR",
-          message: "Tài khoản không tồn tại!",
+          message: "Account does not exist!",
         });
       }
 
@@ -115,13 +115,13 @@ const deleteUser = (id) => {
       if (checkUser === null) {
         resolve({
           status: "ERR",
-          message: "Tài khoản không tồn tại!",
+          message: "Account does not exist!",
         });
       }
       await User.findByIdAndDelete(id);
       resolve({
         status: "OK",
-        message: "Xóa tài khoản thành công",
+        message: "Account deleted successfully",
       });
     } catch (e) {
       reject(e);
@@ -135,7 +135,7 @@ const deleteManyUser = (ids) => {
       await User.deleteMany({ _id: ids });
       resolve({
         status: "OK",
-        message: "Xóa nhiều tài khoản thành công",
+        message: "Successfully deleted multiple accounts",
       });
     } catch (e) {
       reject(e);
@@ -150,6 +150,7 @@ const getAllUser = () => {
       resolve({
         status: "OK",
         message: "Success",
+        results: allUser.length,
         data: allUser,
       });
     } catch (e) {
@@ -167,7 +168,7 @@ const getDetailsUser = (id) => {
       if (user === null) {
         resolve({
           status: "ERR",
-          message: "Tài khoản không tồn tại!",
+          message: "Account does not exist!",
         });
       }
       resolve({
